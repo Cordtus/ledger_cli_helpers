@@ -71,4 +71,4 @@ export PATH="$PATH:$(npm root -g)/../bin"
 
 **Connection issues**: Make sure device is on dashboard (not in an app).
 
-**Permission denied**: Add udev rules for Ledger devices.
+**Permission denied**: Add [udev rules for Ledger devices](https://support.ledger.com/article/115005165269-zd).
