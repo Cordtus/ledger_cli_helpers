@@ -1,46 +1,74 @@
-# Ledger Live Helper Scripts
+# Ledger CLI Helpers
 
-Helpers to simplify common Ledger device tasks using the [ledger-live](https://github.com/LedgerHQ/ledger-live) CLI (firmware updates, app installs/updates).
+Shell helpers for managing Ledger hardware wallets via `ledger-live` CLI.
 
----
+## Prerequisites
 
-## Prerequisites (both Bash & Fish)
-
-* **CLI**: `ledger-live` in your `$PATH`
-* **Utilities**: `lsusb` (from `usbutils`), `jq`
-* **Shell**: Bash (≥ 4.0) or Fish (≥ 3.0)
-
----
+- **ledger-live CLI**: `npm install -g @ledgerhq/live-cli`
+- **jq**: JSON processor
+- **node** (optional): Improves JSON parsing reliability
 
 ## Installation
 
-> **Download or clone** this repository to a local directory. For example:
->
-> ```bash
-> git clone https://github.com/your-repo/ledger-live-helpers.git ~/ledger-live-helpers
-> cd ~/ledger-live-helpers
-> ```
-
 ### Bash
-
-### Bash
-
-Copy the Bash scripts into a folder in your `PATH` (e.g. `~/bin`), make them executable, and reload your shell:
 
 ```bash
-mkdir -p ~/bin
-cp bash/*.sh ~/bin/
-chmod +x ~/bin/*.sh
-# reload your shell or run:
-source ~/.bashrc
+# Add to ~/.bashrc or ~/.bash_profile
+source /path/to/ledger_cli_helpers/bash/ledger_helpers.sh
+```
+
+### Zsh
+
+```zsh
+# Add to ~/.zshrc
+source /path/to/ledger_cli_helpers/zsh/ledger_helpers.zsh
 ```
 
 ### Fish
 
-Copy the Fish functions into your Fish functions directory and restart Fish:
+```fish
+# Copy to fish functions directory
+cp /path/to/ledger_cli_helpers/fish/ledger_helpers.fish ~/.config/fish/functions/
+```
+
+## Functions
+
+| Function | Description |
+|----------|-------------|
+| `ledgerListApps` | List installed app names |
+| `ledgerInstallApp <app> [app2...]` | Install/update apps |
+| `ledgerUpdateApps` | Update all installed apps |
+| `ledgerUpdateFirmware` | Check and update firmware |
+
+## Examples
 
 ```bash
-mkdir -p ~/.config/fish/functions
-cp fish/*.fish ~/.config/fish/functions/
-exec fish
+# List apps
+ledgerListApps
+
+# Install Bitcoin and Ethereum
+ledgerInstallApp Bitcoin Ethereum
+
+# Update all apps
+ledgerUpdateApps
+
+# Update firmware
+ledgerUpdateFirmware
 ```
+
+## Notes
+
+- Device must be connected and unlocked on the dashboard
+- Firmware updates wipe all apps (reinstall after)
+- The `--to-my-own-risk` flag bypasses interactive prompts
+
+## Troubleshooting
+
+**ledger-live not found**: Ensure npm global bin is in PATH:
+```bash
+export PATH="$PATH:$(npm root -g)/../bin"
+```
+
+**Connection issues**: Make sure device is on dashboard (not in an app).
+
+**Permission denied**: Add udev rules for Ledger devices.
